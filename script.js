@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function(){
     const form = document.querySelector(`.search-box`);
     const input = form.querySelector(`input[type="search"]`);
-    const resultsContainer = document.querySelector('results');
+    const resultsContainer = document.querySelector('.results');
     const resultsCounter = document.querySelector('header p');
 
     form.addEventListener('submit', function(event){
@@ -20,12 +20,19 @@ document.addEventListener('DOMContentLoaded', function(){
         }).catch(error => alert('Error: ' + error));
     }
 
+    
     function displayResults(results){
+
+
         resultsContainer.innerHTML = '';
-        resultsCounter.textContent = 'Numero de resultados: ${results.length}'
-        results.forEach(results => {
+        resultsCounter.textContent = `Numero de resultados: ${results.length}`
+        results.forEach(result => {
+            console.log(result.snippet)
             const resultsElements = document.createElement('div');
+            resultsElements.className = 'result';
+            resultsElements.innerHTML = `<h3>${result.title}</h3><p>${result.snippet}</p>`;
+            resultsContainer.appendChild(resultsElements);
         });
     }
 
-})
+});

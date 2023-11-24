@@ -70,3 +70,38 @@ header p{
     margin: 0 auto;
 }
 
+.result{
+    margin-bottom: 47px;
+}
+
+.result > a {
+    color: #E8583A;
+    font-size: 21px;
+    font-weight: bold;
+    text-decoration-line: none;
+}
+
+.result > a:hover {
+    color: #AC582B;
+    font-size: 21px;
+    font-weight: bold;
+    text-decoration-line: underline;
+}
+
+.details{
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    justify-content: space-around;
+}
+
+.detailBox {
+    display: flex;
+    background-color: #E62A02;
+    border-radius: 18px;
+}
+
+.detailBox > p {
+    margin: 5px 7px 5px 7px;
+    color: #EDEDED;
+}

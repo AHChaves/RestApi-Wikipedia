@@ -31,28 +31,41 @@ document.addEventListener('DOMContentLoaded', function(){
             //console.log(result);
             const resultsElements = document.createElement('div');
             resultsElements.className = 'result';
-            resultsElements.innerHTML = `<h3>${result.title}</h3><p>${result.snippet}</p>`;
+            resultsElements.innerHTML = `<a href="#" if="titulo${result.pageid}">${result.title}</a><p>${result.snippet}</p>`;
             resultsContainer.appendChild(resultsElements);
 
-            getDetails(result);
+            printDetails(result, resultsElements);
         });
     }
 
-    function getDetails(result) {
+    function printDetails(result, div) {
         const pageUrl = `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext&redirects=1&origin=*&pageids=${result.pageid}`;
 
+        const pageDetailsDiv = document.createElement('div');
+        pageDetailsDiv.className = 'details';
+        div.appendChild(pageDetailsDiv);
+
+        createDetailBox(pageDetailsDiv, 'Núm. palavras', result.wordcount);
+        createDetailBox(pageDetailsDiv, 'Tamanho (bytes)', result.size);
+        createDetailBox(pageDetailsDiv, 'ID da página', result.pageid);
+
         fetch(pageUrl).then(response => response.json()).then(data => {
-            let pageList = data.query.pages;
+            const pageList = data.query.pages;
+
             Object.keys(pageList).forEach(id => {
-                printDetails(pageList[id]);
+                const currentPage = pageList[id];
+
+                
             })
         }).catch(error => alert('Error: ' + error));
     }
 
-    function printDetails(page) {
-        const pageDetails = document.createElement('div');
-        //resultsElements.className = 'result';
-        pageDetails.innerHTML = `<p>titulo: ${page.title}</p>`;
-        resultsContainer.appendChild(pageDetails);
+    function createDetailBox(div, string, value) {
+        let wordCountBox = document.createElement('div');
+        wordCountBox.className = 'detailBox';
+
+        wordCountBox.innerHTML = `<p>${string}: ${value}</p>`;
+
+        div.appendChild(wordCountBox);
     }
 });

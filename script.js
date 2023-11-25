@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function(){
     const input = form.querySelector(`input[type="search"]`);
     const resultsContainer = document.querySelector('.results');
     const resultsCounter = document.querySelector('header p');
-    const modal = document.getElementById("modalTextoWikipedia");
 
+    const modal = document.getElementById("modalTextoWikipedia");
     setupModal();
 
     form.addEventListener('submit', function(event){
@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function(){
             displayResults(data.query.search);
         }).catch(error => alert('Error: ' + error));
     }
-
     
     function displayResults(results){
         resultsContainer.innerHTML = '';

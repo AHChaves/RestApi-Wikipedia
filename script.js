@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function(){
     function changeModalText(id) {
         const pageUrl = `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext&redirects=1&origin=*&pageids=${id}`;
 
+        
         fetch(pageUrl).then(response => response.json()).then(data => {
             const pageList = data.query.pages;
 
@@ -84,7 +85,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 const currentPage = pageList[id];
                 const conteudoModal = document.getElementById("conteudoPagina");
 
-                conteudoModal.innerHTML = currentPage.extract;
+                let stringConteudo = currentPage.extract.replaceAll('\n', '<br/>');
+
+                conteudoModal.innerHTML = stringConteudo;
+                console.log(currentPage.extract);
             })
         }).catch(error => alert('Error: ' + error));
     }

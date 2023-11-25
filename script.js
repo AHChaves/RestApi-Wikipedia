@@ -68,15 +68,12 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     function openModal(id) {
-        console.log("babababab");
-
         modal.style.display = "block";
         changeModalText(id);
     }
 
     function changeModalText(id) {
         const pageUrl = `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext&redirects=1&origin=*&pageids=${id}`;
-
         
         fetch(pageUrl).then(response => response.json()).then(data => {
             const pageList = data.query.pages;

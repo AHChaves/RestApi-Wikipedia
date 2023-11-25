@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const input = form.querySelector(`input[type="search"]`);
     const resultsContainer = document.querySelector('.results');
     const resultsCounter = document.querySelector('header p');
+    const modal = document.getElementById("modalTextoWikipedia");
 
     setupModal();
 
@@ -16,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 
     function setupModal() {
-        const modal = document.getElementById("modalTextoWikipedia");
         const span = document.getElementsByClassName("fecharModal")[0];
 
         span.onclick = function () {
@@ -51,13 +51,15 @@ document.addEventListener('DOMContentLoaded', function(){
             titulo.setAttribute('href', '#');
             titulo.setAttribute('id', `titulo${result.pageid}`);
             titulo.innerHTML = result.title;
-
-            console.log(titulo);
-            titulo.addEventListener("click", function () { console.log("bababa"); });
+            titulo.addEventListener("click", function () { openModal(result.pageid) });
 
             resultsElements.appendChild(titulo);
+
+            let texto = document.createElement('p');
+            texto.innerHTML = `${result.snippet}`;
+            resultsElements.appendChild(texto);
+
             resultsElements.className = 'result';
-            resultsElements.innerHTML += `<p>${result.snippet}</p>`;
 
             resultsContainer.appendChild(resultsElements);
 
@@ -65,14 +67,16 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
 
-    function openModal() {
+    function openModal(id) {
         console.log("babababab");
 
         modal.style.display = "block";
-        changeModalText();
+        changeModalText(id);
     }
 
-    function changeModalText() {
+    function changeModalText(id) {
+        const pageUrl = `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext&redirects=1&origin=*&pageids=${id}`;
+
         fetch(pageUrl).then(response => response.json()).then(data => {
             const pageList = data.query.pages;
 
@@ -86,8 +90,6 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     function printDetails(result, div) {
-        const pageUrl = `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext&redirects=1&origin=*&pageids=${result.pageid}`;
-
         const pageDetailsDiv = document.createElement('div');
         pageDetailsDiv.className = 'details';
         div.appendChild(pageDetailsDiv);
